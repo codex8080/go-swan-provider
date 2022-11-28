@@ -68,7 +68,7 @@ type bid struct {
 var config *Configuration
 
 func InitConfig() {
-	configPath := os.Getenv("SWAN_CONFIG_PATH")
+	configPath := os.Getenv("SWAN_PATH")
 	if configPath == "" {
 		homedir, err := os.UserHomeDir()
 		if err != nil {
@@ -174,5 +174,13 @@ func GetConfig() Configuration {
 	if config == nil {
 		InitConfig()
 	}
+	return *config
+}
+
+func GetPoktConfig() Configuration {
+	if config == nil {
+		InitConfig()
+	}
+	// fmt.Printf("%+v\n", config.Pokt)
 	return *config
 }

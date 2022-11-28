@@ -1,8 +1,8 @@
 [pokt]
 pokt_api_url="http://[ip]:[port]/v1"          # Url of pocket client web api, generally the [port] is 8081
 pokt_access_token=""                          # Access token of pocket network api
-pokt_docker_image="filswan/pocket:RC-0.9.0"   # Docker image name and version
-pokt_docker_name="pokt-node"                  # Pocket containner name
+pokt_docker_image="filswan/pocket:RC-0.9.1.3" # Docker image name and version
+pokt_docker_name="pokt-node-v0.9.1.3"         # Pocket containner name
 pokt_config_path="/root/.pocket"              # Pocket chain blocks data path
 pokt_scan_interval=600                        # Pocket scan interval
 pokt_server_api_url="http://127.0.0.1:8088/"  # Url of pocket server api
