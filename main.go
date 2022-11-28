@@ -15,7 +15,7 @@ import (
 	cors "github.com/itsjamie/gin-cors"
 	"github.com/joho/godotenv"
 
-	"github.com/filswan/go-swan-lib/logs"
+	"swan-provider/logs"
 )
 
 func main() {
@@ -28,6 +28,9 @@ func main() {
 	switch subCmd {
 	case "version":
 		printVersion()
+	case "pocket":
+		pockCmd := os.Args[1:]
+		service.ParsePoktCmd(pockCmd)
 	case "daemon":
 		service.AdminOfflineDeal()
 		createHttpServer()
@@ -52,6 +55,7 @@ func printUsage() {
 	fmt.Println("USAGE:")
 	fmt.Println("    swan-provider version")
 	fmt.Println("    swan-provider daemon")
+	fmt.Println("    swan-provider pocket")
 }
 
 func createHttpServer() {
