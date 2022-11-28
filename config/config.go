@@ -10,12 +10,12 @@ import (
 )
 
 type Configuration struct {
-	Port    int   `toml:"port"`
-	Release bool  `toml:"release"`
+	Port     int    `toml:"port"`
+	Release  bool   `toml:"release"`
 	LogLevel string `toml:"log_level"`
-	Aria2   aria2 `toml:"aria2"`
-	Main    main  `toml:"main"`
-	Bid     bid   `toml:"bid"`
+	Aria2    aria2  `toml:"aria2"`
+	Main     main   `toml:"main"`
+	Bid      bid    `toml:"bid"`
 	Lotus    lotus  `toml:"lotus"`
 	Pokt     pokt   `toml:"pokt"`
 }
@@ -88,8 +88,6 @@ func InitConfig() {
 		}
 	}
 
-	InitLotusConfig(filepath.Join(configPath, "provider/config-lotus.toml"))
-
 	InitPoktConfig(filepath.Join(configPath, "provider/config-pokt.toml"))
 
 }
@@ -104,6 +102,10 @@ func requiredFieldsAreGiven(metaData toml.MetaData) bool {
 		{"aria2"},
 		{"main"},
 		{"bid"},
+
+		{"lotus", "client_api_url"},
+		{"lotus", "market_api_url"},
+		{"lotus", "market_access_token"},
 
 		{"aria2", "aria2_download_dir"},
 		{"aria2", "aria2_host"},
@@ -151,7 +153,6 @@ func requiredPoktAreGiven(metaData toml.MetaData) bool {
 	requiredFields := [][]string{
 		{"pokt", "pokt_api_url"},
 		{"pokt", "pokt_access_token"},
-		{"pokt", "pokt_address"},
 		{"pokt", "pokt_docker_image"},
 		{"pokt", "pokt_docker_name"},
 		{"pokt", "pokt_config_path"},
@@ -169,42 +170,7 @@ func requiredPoktAreGiven(metaData toml.MetaData) bool {
 	return true
 }
 
-func InitLotusConfig(configFile string) {
-	logs.GetLog().Debug("Your lotus config file is:", configFile)
-
-	if metaData, err := toml.DecodeFile(configFile, &config); err != nil {
-		logs.GetLog().Fatal("error:", err)
-	} else {
-		if !requiredLotusAreGiven(metaData) {
-			logs.GetLog().Fatal("required fields not given")
-		}
-	}
-}
-
-func requiredLotusAreGiven(metaData toml.MetaData) bool {
-	requiredFields := [][]string{
-		{"lotus", "client_api_url"},
-		{"lotus", "market_api_url"},
-		{"lotus", "market_access_token"},
-	}
-
-	for _, v := range requiredFields {
-		if !metaData.IsDefined(v...) {
-			logs.GetLog().Fatal("required conf fields ", v)
-		}
-	}
-
-	return true
-}
-
 func GetConfig() Configuration {
-	if config == nil {
-		InitConfig()
-	}
-	return *config
-}
-
-func GetPoktConfig() Configuration {
 	if config == nil {
 		InitConfig()
 	}
