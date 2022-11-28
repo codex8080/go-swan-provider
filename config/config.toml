@@ -1,10 +1,6 @@
 port = 8888
 release = true              # when work in release mode: set this to true, otherwise to false and enviornment variable GIN_MODE not to release
-
-[lotus]
-client_api_url="http://[ip]:[port]/rpc/v0"   # Url of lotus client web api, generally the [port] is 1234
-market_api_url="http://[ip]:[port]/rpc/v0"   # Url of lotus market web api, generally the [port] is 2345, when market and miner are not separate, it is also the url of miner web api
-market_access_token=""                       # Access token of lotus market web api, when market and miner are not separate, it is also the access token of miner web api
+log_level = "INFO"          # DEBUG INFO WARN ERROR FATAL
 
 [aria2]
 aria2_download_dir = "%%ARIA2_DOWNLOAD_DIR%%"   # Directory where offline deal files will be downloaded for importing

@@ -3,7 +3,7 @@ package test
 import (
 	"swan-provider/service"
 
-	"github.com/filswan/go-swan-lib/logs"
+	"swan-provider/logs"
 )
 
 func Test() {

@@ -9,11 +9,11 @@ import (
 	"strings"
 	"swan-provider/common/constants"
 	"swan-provider/config"
+	"swan-provider/logs"
 	"time"
 
 	"github.com/filswan/go-swan-lib/client"
 	"github.com/filswan/go-swan-lib/client/swan"
-	"github.com/filswan/go-swan-lib/logs"
 	libmodel "github.com/filswan/go-swan-lib/model"
 	"github.com/filswan/go-swan-lib/utils"
 )
