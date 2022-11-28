@@ -5,12 +5,12 @@ import (
 	"os"
 	"path/filepath"
 	"swan-provider/config"
+	"swan-provider/logs"
 	"sync"
 	"time"
 
 	"github.com/filswan/go-swan-lib/client/lotus"
 	"github.com/filswan/go-swan-lib/client/swan"
-	"github.com/filswan/go-swan-lib/logs"
 	"github.com/filswan/go-swan-lib/utils"
 )
 
