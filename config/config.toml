@@ -30,3 +30,5 @@ bid_mode = 1                  # 0: manual, 1: auto
 expected_sealing_time = 1920  # 1920 epoch or 16 hours. The time expected for sealing deals. Deals starting too soon will be rejected.
 start_epoch = 2880            # 2880 epoch or 24 hours. Relative value to current epoch
 auto_bid_deal_per_day = 600   # auto-bid deal limit per day for your miner defined above
+
+[pokt]
