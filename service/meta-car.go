@@ -40,43 +40,23 @@ func MetaCar() {
 				Name:  "build",
 				Usage: "Generate CAR file",
 				Flags: []cli.Flag{
+					&cli.BoolFlag{
+						Name:  "dir",
+						Value: true,
+						Usage: "",
+					},
 					&cli.Uint64Flag{
 						Name:  "slice-size",
 						Value: 17179869184, // 16G
 						Usage: "specify chunk piece size",
 					},
-					&cli.UintFlag{
-						Name:  "parallel",
-						Value: 2,
-						Usage: "specify how many number of goroutines runs when generate file node",
-					},
 					&cli.StringFlag{
-						Name:  "graph-name",
-						Value: "meta",
-						Usage: "specify graph name",
-					},
-					&cli.StringFlag{
-						Name:     "car-dir",
+						Name:     "output-dir",
 						Required: true,
 						Usage:    "specify output CAR directory",
 					},
-					&cli.StringFlag{
-						Name:     "uuid",
-						Required: true,
-						Usage:    "Add uuid to filename suffix",
-					},
-					&cli.StringFlag{
-						Name:  "parent-path",
-						Value: "",
-						Usage: "specify graph parent path",
-					},
-					&cli.BoolFlag{
-						Name:  "save-manifest",
-						Value: true,
-						Usage: "create a mainfest.csv in car-dir to save mapping of data-cids and slice names",
-					},
 				},
-				Action: MetaCarBuild,
+				Action: MetaCarBuildFromDir,
 			},
 			{
 				Name:  "restore",
@@ -138,7 +118,17 @@ func MetaCarRoot(c *cli.Context) error {
 	return nil
 }
 
-func MetaCarBuild(c *cli.Context) error {
+func MetaCarBuildFromDir(c *cli.Context) error {
+	outputDir := c.String("output-dir")
+	sliceSize := c.Uint64("slice-size")
+	srcDir := c.Args().First()
+
+	carFileName, err := meta_car.GenerateCarFromDir(outputDir, srcDir, int64(sliceSize))
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("Build CAR :", carFileName)
 	return nil
 }
 
