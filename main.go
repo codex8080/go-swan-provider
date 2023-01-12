@@ -46,6 +46,8 @@ func main() {
 			logs.GetLogger().Warn("received shutdown signal: ", sig)
 			service.StopBoost(service.BoostPid)
 		}
+	case "meta-car":
+		service.MetaCar()
 	default:
 		printUsage()
 	}
