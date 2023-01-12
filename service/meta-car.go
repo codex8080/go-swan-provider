@@ -110,12 +110,24 @@ func MetaCar() {
 }
 
 func MetaCarList(c *cli.Context) error {
+	carFile := c.String("file")
+
+	info, err := meta_car.ListCarFile(carFile)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("List CAR :", carFile)
+	for index, val := range info {
+		fmt.Println(index, val)
+	}
+
 	return nil
 }
 
 func MetaCarRoot(c *cli.Context) error {
-
 	carFile := c.String("file")
+
 	root, err := meta_car.GetCarRoot(carFile)
 	if err != nil {
 		return err
