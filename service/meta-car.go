@@ -2,7 +2,7 @@ package service
 
 import (
 	"fmt"
-	carv2 "github.com/ipld/go-car/v2"
+	meta_car "github.com/FogMeta/meta-lib/module/ipfs"
 	"github.com/urfave/cli/v2"
 	"os"
 )
@@ -29,18 +29,10 @@ func MetaCar() {
 				Usage:  "List the CIDs in a car",
 				Action: MetaCarList,
 				Flags: []cli.Flag{
-					&cli.BoolFlag{
-						Name:    "verbose",
-						Aliases: []string{"v"},
-						Usage:   "Include verbose information about contained blocks",
-					},
-					&cli.BoolFlag{
-						Name:  "unixfs",
-						Usage: "List unixfs filesystem from the root of the car",
-					},
-					&cli.BoolFlag{
-						Name:  "links",
-						Usage: "List links from the root of the car",
+					&cli.StringFlag{
+						Name:    "file",
+						Aliases: []string{"f"},
+						Usage:   "Specify source car file",
 					},
 				},
 			},
@@ -121,19 +113,16 @@ func MetaCarList(c *cli.Context) error {
 	return nil
 }
 
-func MetaCarRoot(c *cli.Context) (err error) {
-	inStream, err := os.Open(c.String("file"))
+func MetaCarRoot(c *cli.Context) error {
+
+	carFile := c.String("file")
+	root, err := meta_car.GetCarRoot(carFile)
 	if err != nil {
 		return err
-	}
-	rd, err := carv2.NewBlockReader(inStream)
-	if err != nil {
-		return err
-	}
-	for _, r := range rd.Roots {
-		fmt.Printf("root CID: %s\n", r.String())
 	}
 
+	fmt.Println("CAR :", carFile)
+	fmt.Println("CID :", root)
 	return nil
 }
 
